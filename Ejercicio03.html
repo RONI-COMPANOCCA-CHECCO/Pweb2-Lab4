@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 10 Regiones por Suma Total de Confirmados</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<h1>Top 10 Regiones por Suma Total de Confirmados</h1>
+
+<ol id="top-10-list"></ol>
+
+<script>
+$(document).ready(function(){
+    $.ajax({  // realiza una solicitud Ajax.
+        url: 'data.json',
+        dataType: 'json',
+        success: function(data) {
+            // Objeto para almacenar el total de confirmados por región
+            var totalConfirmadosPorRegion = {};
+
+            // Calcular el total de confirmados por región
+            data.forEach(function(region){
+                var total = region.confirmed.reduce(function(sum, item) {
+                    return sum + parseInt(item.value);
+                }, 0);
+
+                totalConfirmadosPorRegion[region.region] = total;
+            });
+
+        },
+       
+    });
+});
+</script>
+
+</body>
+</html>
