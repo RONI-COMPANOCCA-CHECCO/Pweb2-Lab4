@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+#file-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#file-list li {
+    cursor: pointer;
+    margin: 5px 0;
+    color: blue;
+    text-decoration: underline;
+}
+
+#file-list li:hover {
+    color: darkblue;
+}
+
+#file-content {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+}

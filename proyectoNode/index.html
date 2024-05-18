@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Viewer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Markdown Viewer</h1>
+    <div>
+        <h2>Archivos Markdown Disponibles</h2>
+        <ul id="file-list"></ul>
+    </div>
+    <div>
+        <h2>Contenido del Archivo</h2>
+        <div id="file-content"></div>
+    </div>
+    <div>
+        <h2>Subir Nuevo Archivo Markdown</h2>
+        <form id="upload-form">
+            <input type="file" id="file-input" name="file">
+            <button type="submit">Subir</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
