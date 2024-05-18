@@ -35,6 +35,38 @@ $(document).ready(function(){
                     fill: false
                 };
             });
+            var ctx = document.getElementById('confirmados-comparativo-chart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data[0].confirmed.map(function(item){
+                        return item.date;
+                    }),
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Fecha'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Confirmados'
+                            }
+                        }
+                    }
+                }
+            });
 
         },
         error: function() {
