@@ -39,6 +39,9 @@ $(document).ready(function(){
             }
 
         },
+        error: function() {
+            $('#top-10-list').append('<li>Error al cargar los datos</li>');
+        }
        
     });
 });
