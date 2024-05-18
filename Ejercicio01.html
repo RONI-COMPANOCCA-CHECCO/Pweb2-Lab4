@@ -11,7 +11,19 @@
     <ul id="regiones-lista"></ul>
     <script>
         $(document).ready(function(){
-            
+            $.ajax({   // realiza una solicitud Ajax.
+                url: 'data.json',
+                dataType: 'json',
+                success: function(data) {
+                    // Recorrer los datos y mostrar las regiones
+                    data.forEach(function(region){
+                        $('#regiones-lista').append('<li>' + region.region + '</li>');
+                    });
+                },
+                error: function() {
+                    $('#regiones-lista').append('<li>Error al cargar las regiones</li>');
+                }
+            });
         });
         </script>
         
