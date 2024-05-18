@@ -29,6 +29,44 @@ $(document).ready(function(){
                 return parseInt(item.value);
             });
 
+            // Creamos el gráfico usando Chart.js
+            var ctx = document.getElementById('confirmados-chart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: fechas,
+                    datasets: [{
+                        label: 'Confirmados',
+                        data: valores,
+                        borderColor: 'blue',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Fecha'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Confirmados'
+                            }
+                        }
+                    }
+                }
+            });
+
         },
         error: function() {
             $('#confirmados-chart').replaceWith('<p>Error al cargar los datos</p>');
