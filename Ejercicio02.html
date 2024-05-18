@@ -36,7 +36,7 @@
                     totalConfirmadosPorRegion[region.region] = total;
                 });
 
-                // Mostrar el total de confirmados por región en la tabla
+                // Mostramos el total de confirmados por región en la tabla
                 $.each(totalConfirmadosPorRegion, function(region, total){
                     $('#confirmados-body').append('<tr><td>' + region + '</td><td>' + total + '</td></tr>');
                 });

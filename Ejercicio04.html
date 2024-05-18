@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gráfico de Confirmados para la Región de Arequipa</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<h1>Gráfico de Confirmados para la Región de Arequipa</h1>
+
+<canvas id="confirmados-chart" width="800" height="400"></canvas>
+
+<script>
+$(document).ready(function(){
+    $.ajax({ // realiza una solicitud Ajax.
+        url: 'data.json',
+        dataType: 'json',
+        success: function(data) {
+            var arequipaData = data.find(function(region){
+                return region.region === 'Arequipa';
+            });
+
+            var fechas = arequipaData.confirmed.map(function(item){
+                return item.date;
+            });
+            var valores = arequipaData.confirmed.map(function(item){
+                return parseInt(item.value);
+            });
+
+        },
+        error: function() {
+            $('#confirmados-chart').replaceWith('<p>Error al cargar los datos</p>');
+        }
+    });
+});
+</script>
+
+</body>
+</html>

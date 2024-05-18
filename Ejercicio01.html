@@ -16,7 +16,7 @@
                 url: 'data.json',
                 dataType: 'json',
                 success: function(data) {
-                    // Recorrer los datos y mostrar las regiones
+                    // Recorremos los datos y mostramos las regiones
                     data.forEach(function(region){
                         $('#regiones-lista').append('<li>' + region.region + '</li>');
                     });

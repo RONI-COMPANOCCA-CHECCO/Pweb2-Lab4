@@ -18,10 +18,8 @@ $(document).ready(function(){
         url: 'data.json',
         dataType: 'json',
         success: function(data) {
-            // Objeto para almacenar el total de confirmados por región
             var totalConfirmadosPorRegion = {};
 
-            // Calcular el total de confirmados por región
             data.forEach(function(region){
                 var total = region.confirmed.reduce(function(sum, item) {
                     return sum + parseInt(item.value);
