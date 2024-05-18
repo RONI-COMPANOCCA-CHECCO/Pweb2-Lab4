@@ -73,7 +73,15 @@ $(document).ready(function(){
             $('#confirmados-comparativo-chart').replaceWith('<p>Error al cargar los datos</p>');
         }
     });
-
+    // Función para obtener colores aleatorios
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 });
 </script>
 
