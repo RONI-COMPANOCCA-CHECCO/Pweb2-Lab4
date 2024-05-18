@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gráfico Comparativo de Confirmados por Región (excluyendo Lima y Callao)</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h1>Gráfico Comparativo de Confirmados por Región (excluyendo Lima y Callao)</h1>
+
+<canvas id="confirmados-comparativo-chart" width="800" height="400"></canvas>
+
+<script>
+$(document).ready(function(){
+    $.ajax({
+        url: 'data.json',
+        dataType: 'json',
+        success: function(data) {
+            var regionesExcluidas = ['Lima', 'Callao'];
+
+            var regionesFiltradas = data.filter(function(region){
+                return !regionesExcluidas.includes(region.region);
+            });
+
+            var datasets = regionesFiltradas.map(function(region){
+                return {
+                    label: region.region,
+                    data: region.confirmed.map(function(item){
+                        return parseInt(item.value);
+                    }),
+                    borderColor: getRandomColor(),
+                    borderWidth: 2,
+                    fill: false
+                };
+            });
+
+            var ctx = document.getElementById('confirmados-comparativo-chart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: regionesFiltradas[0].confirmed.map(function(item){
+                        return item.date;
+                    }),
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Fecha'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Confirmados'
+                            }
+                        }
+                    }
+                }
+            });
+        },
+        error: function() {
+            $('#confirmados-comparativo-chart').replaceWith('<p>Error al cargar los datos</p>');
+        }
+    });
+});
+
+// Función para generar colores aleatorios
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+</script>
+
+</body>
+</html>
