@@ -29,6 +29,14 @@ $(document).ready(function(){
 
                 totalConfirmadosPorRegion[region.region] = total;
             });
+            // Ordenamos las regiones por su suma total de confirmados (de mayor a menor)
+            var sortedRegions = Object.keys(totalConfirmadosPorRegion).sort(function(a, b) {
+                return totalConfirmadosPorRegion[b] - totalConfirmadosPorRegion[a];
+            });
+
+            for (var i = 0; i < 10 && i < sortedRegions.length; i++) {
+                $('#top-10-list').append('<li>' + sortedRegions[i] + ': ' + totalConfirmadosPorRegion[sortedRegions[i]] + '</li>');
+            }
 
         },
        
