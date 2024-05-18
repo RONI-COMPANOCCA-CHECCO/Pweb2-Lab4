@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gráfico Comparativo de Confirmados por Región</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h1>Gráfico Comparativo de Confirmados por Región</h1>
+
+<label for="regiones">Seleccione regiones:</label>
+<select id="regiones" multiple>
+  <option value="Amazonas">Amazonas</option>
+  <option value="Ancash">Ancash</option>
+  <option value="Apurimac">Apurimac</option>
+  <!-- Agrega más opciones aquí -->
+</select>
+
+<button id="generar-grafico">Generar Gráfico</button>
+
+<canvas id="confirmados-comparativo-chart" width="800" height="400"></canvas>
+
+<script>
+$(document).ready(function(){
+    $('#generar-grafico').click(function(){
+        var regionesSeleccionadas = $('#regiones').val();
+
+        if (regionesSeleccionadas.length === 0) {
+            alert('Por favor, seleccione al menos una región.');
+            return;
+        }
+
+        $.ajax({
+            url: 'data.json',
+            dataType: 'json',
+            success: function(data) {
+                var datasets = regionesSeleccionadas.map(function(region){
+                    var regionData = data.find(function(item){
+                        return item.region === region;
+                    });
+
+                    return {
+                        label: region,
+                        data: regionData.confirmed.map(function(item){
+                            return parseInt(item.value);
+                        }),
+                        borderColor: getRandomColor(),
+                        borderWidth: 2,
+                        fill: false
+                    };
+                });
+
+                var ctx = document.getElementById('confirmados-comparativo-chart').getContext('2d');
+                var chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data[0].confirmed.map(function(item){
+                            return item.date;
+                        }),
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'day'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Fecha'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Confirmados'
+                                }
+                            }
+                        }
+                    }
+                });
+            },
+            error: function() {
+                $('#confirmados-comparativo-chart').replaceWith('<p>Error al cargar los datos</p>');
+            }
+        });
+    });
+});
+
+// Función para generar colores aleatorios
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+</script>
+
+</body>
+</html>
